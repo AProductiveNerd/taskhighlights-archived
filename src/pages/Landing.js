@@ -1,8 +1,4 @@
-// import { useHistory } from "react-router-dom";
-
 export const Landing = () => {
-	// const history = useHistory();
-
 	return (
 		<div className="flex justify-center">
 			<div
@@ -15,7 +11,9 @@ export const Landing = () => {
 			>
 				<div className="pt-5">
 					<div className="pb-3 space-y-1">
-						<p className="text-black-faded text-center text-2xl">Not Found</p>
+						<p className="text-black-faded text-center text-2xl">
+							Not Found
+						</p>
 					</div>
 				</div>
 			</div>
