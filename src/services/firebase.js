@@ -46,6 +46,7 @@ export async function addPageIfNotExist({
 	dateManup,
 	uid,
 }) {
+	console.log("It ran");
 	const y = setDay(new Date(), dateManup).toLocaleDateString("en-GB");
 
 	const result = await firebase
@@ -64,17 +65,29 @@ export async function addPageIfNotExist({
 	} else if (resLength === 0 && todayExists !== false) {
 		setTodayExists(false);
 	}
+}
 
-	if (todayExists === false) {
-		firebase
-			.firestore()
-			.collection("daily")
-			.add({
-				utcLongDate: new Date().toUTCString(),
-				localDateString: new Date(),
-				slashDate: y,
-				uid: uid,
-			})
-			.then(() => window.location.reload());
-	}
+export async function addingPage({
+	uid,
+	setCurrDocId,
+	setTodayExists,
+	dateManup,
+}) {
+	console.log("addingPage ran");
+
+	const y = setDay(new Date(), dateManup).toLocaleDateString("en-GB");
+
+	const result = await firebase
+		.firestore()
+		.collection("daily")
+		.add({
+			utcLongDate: new Date().toUTCString(),
+			localDateString: new Date(),
+			slashDate: y,
+			uid: uid,
+		})
+		.then((document) => {
+			setCurrDocId(document.id);
+			setTodayExists(true);
+		});
 }

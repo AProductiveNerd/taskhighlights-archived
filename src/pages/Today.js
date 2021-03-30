@@ -4,7 +4,7 @@ import UserContext from "../context/UserContext";
 import { AddTask } from "../components/Add-task";
 import { IndividualTask } from "../components/task-displays/Individual-task";
 import { HighlightTask } from "../components/task-displays/Highlight-task";
-import { addPageIfNotExist } from "../services/firebase";
+import { addingPage, addPageIfNotExist } from "../services/firebase";
 import { setDay } from "date-fns";
 
 export const Today = () => {
@@ -15,7 +15,7 @@ export const Today = () => {
 	const [currHighlight, setCurrHighlight] = useState([]);
 	const [todayExists, setTodayExists] = useState();
 	const [currDocId, setCurrDocId] = useState();
-	const [dateManup, setDateManup] = useState(1);
+	const [dateManup, setDateManup] = useState(2);
 
 	useEffect(() => {
 		addPageIfNotExist({
@@ -26,7 +26,15 @@ export const Today = () => {
 			dateManup,
 			uid,
 		});
+	}, [currDocId, dateManup, todayExists, uid]);
 
+	useEffect(() => {
+		if (todayExists === false) {
+			addingPage({ uid, setCurrDocId, setTodayExists, dateManup });
+		}
+	}, [dateManup, todayExists, uid]);
+
+	useEffect(() => {
 		if (todayExists === true && currDocId) {
 			firebase
 				.firestore()
@@ -67,7 +75,7 @@ export const Today = () => {
 					array = [];
 				});
 		}
-	}, [currDocId, dateManup, firebase, todayExists, uid]);
+	}, [currDocId, firebase, todayExists]);
 
 	return (
 		<div
