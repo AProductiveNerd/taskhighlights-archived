@@ -77,7 +77,7 @@ export async function addingPage({
 
 	const y = setDay(new Date(), dateManup).toLocaleDateString("en-GB");
 
-	const result = await firebase
+	await firebase
 		.firestore()
 		.collection("daily")
 		.add({
