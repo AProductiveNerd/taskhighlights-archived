@@ -91,3 +91,21 @@ export async function addingPage({
 			setTodayExists(true);
 		});
 }
+
+export async function fetchUserDailies({ uid, setUserDailies }) {
+	var array = [];
+	const result = await firebase
+		.firestore()
+		.collection("daily")
+		.where("uid", "==", uid)
+		.orderBy("slashDate")
+		.get();
+	// .then((querySnapshot) => {
+	// 	querySnapshot.forEach((doc) => {
+	// 		array.push(doc.id);
+	// 	});
+	// });
+	result.docs.map((doc) => array.push(doc.id));
+
+	setUserDailies(array);
+}

@@ -29,7 +29,7 @@ export const Header = () => {
 			path !== ROUTES.COMPLETED &&
 			path !== ROUTES.TODAY &&
 			path !== ROUTES.ARCHIVED &&
-			path !== ROUTES.PROFILE
+			path.slice(0, 3) !== "/p/"
 		) {
 			uid && history.push(ROUTES.TODAY);
 		}
